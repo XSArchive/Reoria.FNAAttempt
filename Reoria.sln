@@ -3,12 +3,41 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{EAC62FEB-5CAB-44B5-9108-F051C295B304}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{01AEC850-D060-4669-A1BF-AF912F69441B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{007B7EB2-7D6E-4DB6-A092-D2BA2F586C80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reoria.Server", "source\Reoria.Server\Reoria.Server.csproj", "{30045A7D-F770-4091-92CE-2D35E1C2176D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reoria", "source\Reoria\Reoria.csproj", "{1E0E4476-9151-40AC-8A03-B7081B6529FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30045A7D-F770-4091-92CE-2D35E1C2176D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30045A7D-F770-4091-92CE-2D35E1C2176D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30045A7D-F770-4091-92CE-2D35E1C2176D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30045A7D-F770-4091-92CE-2D35E1C2176D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0E4476-9151-40AC-8A03-B7081B6529FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0E4476-9151-40AC-8A03-B7081B6529FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0E4476-9151-40AC-8A03-B7081B6529FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0E4476-9151-40AC-8A03-B7081B6529FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01AEC850-D060-4669-A1BF-AF912F69441B} = {EAC62FEB-5CAB-44B5-9108-F051C295B304}
+		{007B7EB2-7D6E-4DB6-A092-D2BA2F586C80} = {EAC62FEB-5CAB-44B5-9108-F051C295B304}
+		{30045A7D-F770-4091-92CE-2D35E1C2176D} = {01AEC850-D060-4669-A1BF-AF912F69441B}
+		{1E0E4476-9151-40AC-8A03-B7081B6529FB} = {EAC62FEB-5CAB-44B5-9108-F051C295B304}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BDAE2AA-8AA8-429E-A02A-E3F59006D0EE}
 	EndGlobalSection
 EndGlobal
