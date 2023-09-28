@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Reoria.Application.Interfaces;
 
 namespace Reoria.Application;
@@ -90,6 +91,15 @@ public abstract class ApplicationCore : IApplicationCore
         if (this.service is not null) { return this; }
 
         this.host.ConfigureAppConfiguration(configureDelegate);
+
+        return this;
+    }
+
+    public virtual IApplicationCore ConfigureLogging(Action<HostBuilderContext, ILoggingBuilder> configureDelegate)
+    {
+        if (this.service is not null) { return this; }
+
+        this.host.ConfigureLogging(configureDelegate);
 
         return this;
     }

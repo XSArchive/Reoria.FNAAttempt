@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Reoria.Application.Interfaces;
 using System.Diagnostics;
 
@@ -6,14 +7,16 @@ namespace Reoria.Server.Application.Services;
 
 public class GameService : IApplicationService
 {
+    private readonly ILogger<GameService> logger;
     private readonly IConfiguration configuration;
     private readonly IApplicationCore app;
     private readonly int targetFrameRate;
     private readonly TimeSpan targetFrameTime;
     private bool isRunning = false;
 
-    public GameService(IConfiguration configuration, IApplicationCore app)
+    public GameService(ILogger<GameService> logger, IConfiguration configuration, IApplicationCore app)
     {
+        this.logger = logger;
         this.configuration = configuration;
         this.app = app;
         this.targetFrameRate = this.configuration.GetValue("Server:Framerate", 20);
@@ -25,7 +28,7 @@ public class GameService : IApplicationService
         string serverName = this.configuration["Game:Name"] ?? string.Empty;
         int ticks = this.configuration.GetValue("Server:Ticks", 5);
 
-        Console.WriteLine($"Starting {serverName} server...");
+        logger.LogInformation("Starting {serverName} game server...", serverName);
 
         isRunning = true;
 
@@ -39,7 +42,9 @@ public class GameService : IApplicationService
 
             if (elapsedTime >= targetFrameTime)
             {
-                Console.WriteLine($"The server has ticked, the time since the last tick was {(currentTime - previousFrameTime).TotalMilliseconds} milliseconds, expected to be {targetFrameTime.TotalMilliseconds} milliseconds...");
+                logger.LogInformation("The server has ticked, the time elapsed was {delta} milliseconds, expected {expectedDelta} milliseconds...",
+                    (currentTime - previousFrameTime).TotalMilliseconds,
+                    targetFrameTime.TotalMilliseconds);
                 previousFrameTime = currentTime;
                 ticks--;
 
@@ -51,7 +56,7 @@ public class GameService : IApplicationService
             }
         }
 
-        Console.WriteLine($"Shutting down {serverName} game server...");
+        logger.LogInformation("Shutting down {serverName} game server...", serverName);
     }
 
     public void Stop()
