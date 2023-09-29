@@ -6,15 +6,6 @@ using Reoria.Server.Application;
 using Reoria.Server.Application.Services;
 using Serilog;
 
-var config = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .Build();
-
-var logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(config)
-            .CreateLogger();
-
 using var server = new ServerApplication(args);
 
 server.ConfigureServices((context, services) =>
@@ -29,6 +20,6 @@ server.ConfigureServices((context, services) =>
 .ConfigureLogging((context, logging) =>
 {
     logging.ClearProviders();
-    logging.AddSerilog(logger, true);
+    logging.AddSerilog(server.GetLogger(), true);
 })
 .Start<GameService>();

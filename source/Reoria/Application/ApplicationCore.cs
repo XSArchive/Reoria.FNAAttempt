@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Reoria.Application.Interfaces;
+using Serilog;
+using Serilog.Core;
 
 namespace Reoria.Application;
 
@@ -10,19 +12,21 @@ public abstract class ApplicationCore : IApplicationCore
 {
     protected readonly string[] args;
     protected readonly IHostBuilder host;
+    private readonly IConfigurationRoot config;
+    private readonly Logger logger;
     private IApplicationService? service;
     private bool disposedValue;
 
-    public ApplicationCore()
-    {
-        this.args = Array.Empty<string>();
-        this.host = CreateHostBuilder();
-    }
+    public Logger GetLogger() => this.logger;
+
+    public ApplicationCore() : this(Array.Empty<string>()) { }
 
     public ApplicationCore(string[] args)
     {
         this.args = args;
-        this.host = CreateHostBuilder();
+        this.host = this.CreateHostBuilder(this.args);
+        this.config = this.CreateConfiguration().Build();
+        this.logger = this.CreateLogger().CreateLogger();
     }
 
     ~ApplicationCore()
@@ -70,11 +74,24 @@ public abstract class ApplicationCore : IApplicationCore
         return this;
     }
 
-    protected virtual IHostBuilder CreateHostBuilder(string[]? args = null)
+    protected virtual IHostBuilder CreateHostBuilder(string[] args)
     {
-        if (args is null) { return Host.CreateDefaultBuilder(); }
-
         return Host.CreateDefaultBuilder(args);
+    }
+
+    protected virtual IConfigurationBuilder CreateConfiguration()
+    {
+        return new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddCommandLine(this.args)
+            .AddEnvironmentVariables();
+    }
+
+    protected virtual LoggerConfiguration CreateLogger()
+    {
+        return new LoggerConfiguration()
+            .ReadFrom.Configuration(this.config);
     }
 
     public virtual IApplicationCore ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
