@@ -15,18 +15,28 @@ public abstract class ApplicationCore : IApplicationCore
     private readonly IConfigurationRoot config;
     private readonly Logger logger;
     private IApplicationService? service;
+    private IHost? application;
     private bool disposedValue;
-
-    public Logger GetLogger() => this.logger;
 
     public ApplicationCore() : this(Array.Empty<string>()) { }
 
     public ApplicationCore(string[] args)
     {
         this.args = args;
-        this.host = this.CreateHostBuilder(this.args);
         this.config = this.CreateConfiguration().Build();
         this.logger = this.CreateLogger().CreateLogger();
+        this.host = this.CreateHostBuilder(this.args).ConfigureServices((context, services) =>
+        {
+            services.AddSingleton<IApplicationCore>(this);
+        }).ConfigureAppConfiguration((context, configuration) =>
+        {
+            configuration.AddConfiguration(this.config);
+        })
+        .ConfigureLogging((context, logging) =>
+        {
+            logging.ClearProviders();
+            logging.AddSerilog(this.logger, true);
+        });
     }
 
     ~ApplicationCore()
@@ -53,13 +63,21 @@ public abstract class ApplicationCore : IApplicationCore
         }
     }
 
-    public virtual IApplicationCore Start<TService>(params object[] parameters) where TService : IApplicationService
+    public virtual IApplicationCore Start<TService>(params object[] parameters) where TService : class, IApplicationService
     {
         if (this.service is not null) { return this; }
 
-        var host = this.host.Build();
+        if (this.application is null)
+        {
+            this.host.ConfigureServices((context, services) =>
+            {
+                services.AddSingleton<IApplicationService, TService>();
+            });
 
-        (this.service = ActivatorUtilities.CreateInstance<TService>(host.Services, parameters)).Start();
+            this.application = this.host.Build();
+        }
+
+        (this.service = ActivatorUtilities.CreateInstance<TService>(this.application.Services, parameters)).Start();
 
         return this;
     }
@@ -96,8 +114,6 @@ public abstract class ApplicationCore : IApplicationCore
 
     public virtual IApplicationCore ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
     {
-        if (this.service is not null) { return this; }
-
         this.host.ConfigureServices(configureDelegate);
 
         return this;
@@ -105,8 +121,6 @@ public abstract class ApplicationCore : IApplicationCore
 
     public virtual IApplicationCore ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
     {
-        if (this.service is not null) { return this; }
-
         this.host.ConfigureAppConfiguration(configureDelegate);
 
         return this;
@@ -114,8 +128,6 @@ public abstract class ApplicationCore : IApplicationCore
 
     public virtual IApplicationCore ConfigureLogging(Action<HostBuilderContext, ILoggingBuilder> configureDelegate)
     {
-        if (this.service is not null) { return this; }
-
         this.host.ConfigureLogging(configureDelegate);
 
         return this;

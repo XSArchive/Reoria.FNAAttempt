@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{01AEC8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{007B7EB2-7D6E-4DB6-A092-D2BA2F586C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reoria.Server", "source\Reoria.Server\Reoria.Server.csproj", "{30045A7D-F770-4091-92CE-2D35E1C2176D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reoria.Server", "source\Reoria.Server\Reoria.Server.csproj", "{30045A7D-F770-4091-92CE-2D35E1C2176D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reoria", "source\Reoria\Reoria.csproj", "{1E0E4476-9151-40AC-8A03-B7081B6529FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reoria", "source\Reoria\Reoria.csproj", "{1E0E4476-9151-40AC-8A03-B7081B6529FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

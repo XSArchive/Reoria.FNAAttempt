@@ -56,7 +56,7 @@ public class GameService : IApplicationService
             }
         }
 
-        logger.LogInformation("Shutting down {serverName} game server...", serverName);
+        logger.LogInformation("Shutting down {serverName} game server...{n}", serverName, Environment.NewLine);
     }
 
     public void Stop()

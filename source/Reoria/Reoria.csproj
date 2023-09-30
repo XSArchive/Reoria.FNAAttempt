@@ -21,7 +21,7 @@
 
     <PackageProjectUrl>https://github.com/XerShade/Reoria</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>reoria,online,action,adventure,role,playing,game,server</PackageTags>
+    <PackageTags>reoria,online,action,adventure,role,playing,game,library</PackageTags>
     <PackageOutputPath>$(SolutionDir)pkg\$(AssemblyName)</PackageOutputPath>
 
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
