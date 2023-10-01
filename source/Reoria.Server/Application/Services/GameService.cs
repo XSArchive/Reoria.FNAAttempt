@@ -19,7 +19,7 @@ public class GameService : IApplicationCoreService
         this.logger = logger;
         this.configuration = configuration;
         this.app = app;
-        this.targetFrameRate = this.configuration.GetValue("Server:Framerate", 20);
+        this.targetFrameRate = this.configuration.GetValue("Game:Framerate", 20);
         this.targetFrameTime = TimeSpan.FromSeconds(1.0 / targetFrameRate);
     }
 
