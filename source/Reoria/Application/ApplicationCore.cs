@@ -14,7 +14,7 @@ public abstract class ApplicationCore : IApplicationCore
     protected readonly IHostBuilder host;
     private readonly IConfigurationRoot config;
     private readonly Logger logger;
-    private IApplicationService? service;
+    private IApplicationCoreService? service;
     private IHost? application;
     private bool disposedValue;
 
@@ -63,7 +63,7 @@ public abstract class ApplicationCore : IApplicationCore
         }
     }
 
-    public virtual IApplicationCore Start<TService>(params object[] parameters) where TService : class, IApplicationService
+    public virtual IApplicationCore Start<TService>(params object[] parameters) where TService : class, IApplicationCoreService
     {
         if (this.service is not null) { return this; }
 
@@ -71,7 +71,7 @@ public abstract class ApplicationCore : IApplicationCore
         {
             this.host.ConfigureServices((context, services) =>
             {
-                services.AddSingleton<IApplicationService, TService>();
+                services.AddSingleton<IApplicationCoreService, TService>();
             });
 
             this.application = this.host.Build();

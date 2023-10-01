@@ -10,6 +10,6 @@ public interface IApplicationCore : IDisposable
     IApplicationCore ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate);
     IApplicationCore ConfigureLogging(Action<HostBuilderContext, ILoggingBuilder> configureDelegate);
     IApplicationCore ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate);
-    IApplicationCore Start<TService>(params object[] parameters) where TService : class, IApplicationService;
+    IApplicationCore Start<TService>(params object[] parameters) where TService : class, IApplicationCoreService;
     IApplicationCore Stop();
 }

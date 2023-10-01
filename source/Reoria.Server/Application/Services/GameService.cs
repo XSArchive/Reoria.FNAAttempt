@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Reoria.Server.Application.Services;
 
-public class GameService : IApplicationService
+public class GameService : IApplicationCoreService
 {
     private readonly ILogger<GameService> logger;
     private readonly IConfiguration configuration;

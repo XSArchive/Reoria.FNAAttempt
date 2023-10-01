@@ -1,6 +1,6 @@
 ﻿namespace Reoria.Application.Interfaces;
 
-public interface IApplicationService
+public interface IApplicationCoreService
 {
     void Start();
     void Stop();
