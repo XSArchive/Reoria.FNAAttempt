@@ -67,10 +67,4 @@
     <ProjectReference Include="..\Reoria\Reoria.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="appsettings.server.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
